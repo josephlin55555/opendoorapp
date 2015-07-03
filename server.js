@@ -1,9 +1,6 @@
 var express = require('express'); //node.js framework
 var bodyParser = require('body-parser'); //node.js parsing middleware
 
-//adds a body object to request; converts from string into JSON
-var jsonParser = bodyParser.json();
-
 var app = express();
 var port = process.env.PORT || 3000;
 

@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="/node_modules/materialize-css/bin/materialize.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-  
+
 <head>
 </head>
 
@@ -21,7 +21,7 @@
           </div>
           <div class="modal-body">
             <p>You've earned {{points}} points!</p>
-            <p class="text-warning"><small>Do you think you can do better?</small></p>
+            <p class="text-warning"><small>Think you can do better?</small></p>
           </div>
           <div class="modal-footer">
             <button ng-click="restartGame()" type="button" class="btn btn-info">restart</button>
@@ -33,7 +33,9 @@
 
   <!-- Main Page -->
   <div class="counterContainer">
-    <div class="note">Press a number key to generate a new word (5 second penalty)</div>
+    <div class="note">
+      Press a number key to generate a new word (5 second penalty).
+    </div>
     <div class="timer">Time Remaining: {{timer}} Second(s)</div>
   </div>
 
@@ -42,6 +44,7 @@
     <div class="points">Current Points: {{points}}</div>
   </div>
 
+  <div class="instructions">Type in all of the letters to guess the correct word.</div>
   <div id="characterContainer">
     <span class="completedCharacters card-panel" ng-repeat="item in finishedWordArray">
       {{item.letter}}

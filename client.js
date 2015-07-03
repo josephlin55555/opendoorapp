@@ -1,16 +1,25 @@
 angular.module('angularApp', [])
   .controller('angularController', function($scope, $http, $timeout) {
-    $scope.currentWordArray = [];
-    $scope.finishedWordArray = [];
-    $scope.correctWordArray = [];
+    
+    //game logic is mainly handled between the following two arrays:
+    $scope.currentWordArray = []; 
+    $scope.finishedWordArray = []; 
+
+    //used for checking purposes
+    $scope.correctWordArray = []; 
+    
+    //time remaining in terms of seconds
     $scope.timer = 120;
+    
+    //points accumulated in a single round
     $scope.points = 0;
 
+    //returns an integer between @min and @max
     $scope.randomGenerator = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     };
 
-    //timer will count down to 0
+    //timer will count down to 0, starting at 120 seconds
     $scope.timeObject = function() {
       if($scope.timer > 0) {
         //At the start, initialize a random word
@@ -18,6 +27,18 @@ angular.module('angularApp', [])
           $scope.getWord();
         }
 
+        //change timer color based on amount of time left
+        if($scope.timer >= 90) {
+          $('.timer').css('color', '#7FDBFF'); //aqua
+        } else if($scope.timer <= 89 && $scope.timer >= 60) {
+          $('.timer').css('color', '#2ECC40'); //lime
+        } else if($scope.timer <= 59 && $scope.timer >= 30) {
+          $('.timer').css('color', '#FFDC00'); //yellow
+        } else if($scope.timer <= 29) { 
+          $('.timer').css('color', '#FF4136'); //red
+        }
+
+        //timer countdown functionality
         $timeout(function() {
           $scope.timer--;
           $scope.timeObject();
@@ -33,6 +54,7 @@ angular.module('angularApp', [])
             keyboard: false
           });
 
+          //show modal
           $("#myModal").modal('show');
         }, 1000);
       }
@@ -40,6 +62,7 @@ angular.module('angularApp', [])
     //initializes the timer
     $timeout($scope.timeObject, 1000);
 
+    //once $scope.finishedWordArray is completely filled, then check if word is correct
     $scope.checkForCompletion = function() {
       var sameLetters = true;
 
@@ -53,6 +76,7 @@ angular.module('angularApp', [])
         //player wins round
         if(sameLetters === true) {
 
+          //the faster the player completes the word, the more points he/she gets
           if($scope.timer >= 90) {
             $scope.points += 3 * $scope.finishedWordArray.length;
           } else if ($scope.timer <= 89 && $scope.timer >= 60) {
@@ -60,6 +84,8 @@ angular.module('angularApp', [])
           } else {
             $scope.points += $scope.finishedWordArray.length;
           }
+
+          //now reset time and grab a new word
           $scope.timer = 120;
           $scope.getWord();
 
@@ -80,6 +106,7 @@ angular.module('angularApp', [])
       }
     };
 
+    //function used to check if keyboard press is a number
     $scope.isNumeric = function(character) {
       character = Number(character);
       if(character === 1 || character === 2 || character === 3 || character === 4 || character === 5 || character === 6 || character === 7 || character === 8 || character === 9 || character === 0) {
@@ -89,13 +116,17 @@ angular.module('angularApp', [])
       }
     };
 
+    //checks which key the user presses
     $scope.keyboardPress = function(event) {
       var character = String.fromCharCode(event.charCode);
+
+      //if key is a number, then grab a new word and give a 5 second penalty
       if($scope.isNumeric(character) && $scope.timer > 10) {
         $scope.getWord();
         $scope.timer -= 5;
       }
-
+      
+      //disable character once it has been pressed
       var cont = true;
       for(var i = 0; i < $scope.currentWordArray.length; i++) {
 
@@ -115,8 +146,9 @@ angular.module('angularApp', [])
       $scope.checkForCompletion();
     };
 
+    //grabs a random word
     $scope.getWord = function() {
-      $http.get('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=2&maxLength=11&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').
+      $http.get('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=pronoun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').
       success(function(data, status, headers, config) {
         
         //reset current word
@@ -124,11 +156,13 @@ angular.module('angularApp', [])
         $scope.currentWordArray = [];
         $scope.correctWordArray = [];
 
+        //pushes each character to @correct and @finished arrays
         for(var i = 0; i < data.word.length; i++) {
           $scope.correctWordArray.push({letter: data.word[i], index: i});
           $scope.currentWordArray.push({letter: data.word[i], index: i});
         }
 
+        //scrambles array in @current to allow user to guess
         for(var i = 0; i < $scope.currentWordArray.length; i++) {
           var randomIndex = $scope.randomGenerator(0, $scope.currentWordArray.length - 1);
           var temp = $scope.currentWordArray[i];
@@ -136,6 +170,7 @@ angular.module('angularApp', [])
           $scope.currentWordArray[randomIndex] = temp;
         }
 
+        //in case user can't figure out the word
         console.log("Cheat: " + data.word);
       }).
       error(function(data, status, headers, config) {
@@ -147,6 +182,7 @@ angular.module('angularApp', [])
       $scope.timer = 120;
       $scope.points = 0;
 
+      //restart game and remove modal
       $timeout($scope.timeObject, 1000);
       $("#myModal").modal('hide');
     };

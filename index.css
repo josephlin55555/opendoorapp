@@ -22,6 +22,8 @@
   left: 89.5%;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  /* start out as aqua color */
+  color: #7FDBFF; 
 }
 
 .titleContainer {
@@ -42,6 +44,16 @@
   font-size: 20px;
 }
 
+.instructions {
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
 
 #characterContainer {
   font-size: 20px;
