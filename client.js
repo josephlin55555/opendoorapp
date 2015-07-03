@@ -23,11 +23,11 @@ angular.module('angularApp', [])
     $scope.loading = function() {
       var quotes = [
       "There is no emotion...", "There is peace.",
-      "These blast points-", "too accurate for sand people.",
+      "These blast points...", "too accurate for sand people.",
       "You will never find a more wretched hive of scum and villainy...", "We must be cautious.",
       "We seem to be made to suffer...", "It's our lot in life.",
       "Help me, Obi-Wan Kenobi...", "you're my only hope.",
-      "I sense something-", "a presence I've not felt since...",
+      "I sense something...", "a presence I've not felt since...",
       ];
 
       var value = $scope.randomGenerator(0, Math.floor((quotes.length - 1) / 2));
