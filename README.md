@@ -2,6 +2,8 @@
 A randomized word scramble typing game
 Created by Joseph Lin
 
+Deployed to http://word-scamble.herokuapp.com/
+
 # Instructions 
 1) type "npm install" 
 2) type "npm start" 
