@@ -1,3 +1,105 @@
-.completedCharacters {
-  color: red;
+/*----------------Main Page-----------------*/
+
+.counterContainer {
+  font-size: 17px;
 }
+
+.note {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.timer {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 5%;
+  left: 89.5%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.titleContainer {
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 23%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.title {
+  font-size: 40px;
+}
+
+.points {
+  font-size: 20px;
+}
+
+
+#characterContainer {
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.completedCharacters.card-panel {
+  background-color: orange;
+}
+
+.characters.card-panel {
+
+}
+
+.extrasContainer {
+  font-size: 17px;
+  width: 100%;
+  text-align: center;
+  position: fixed;
+  top: 91.5%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+
+
+
+
+/*----------------Modal---------------------*/
+
+
+#myModal{
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.modal-title {
+  text-align: center;
+}
+
+.modal-body {
+  text-align: center;
+}
+
+.modal-footer {
+  text-align: center !important;
+}
+
+.btn.btn-info {
+  float: none !important;
+}
+
+
+

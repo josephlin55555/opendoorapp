@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <html>
-  <link rel="stylesheet" href="index.css"/>
 
-  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="index.css"/>
+  <link rel="stylesheet" href="/node_modules/materialize-css/bin/materialize.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <!-- Optional theme -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-  <!-- Latest compiled and minified JavaScript -->
+  
 <head>
 </head>
 
-<body ng-app="angularApp" ng-controller="angularController" ng-keypress="keyboardPress($event)">
+<body id="body" ng-app="angularApp" ng-controller="angularController" ng-keypress="keyboardPress($event)">
 
+  <!-- Modal PopUp -->
   <div class="bs-example">
-    <!-- Modal HTML -->
     <div id="myModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            
             <h4 class="modal-title">Play Again?</h4>
           </div>
           <div class="modal-body">
@@ -26,35 +24,52 @@
             <p class="text-warning"><small>Do you think you can do better?</small></p>
           </div>
           <div class="modal-footer">
-            <button ng-click="restartGame()" type="button" class="btn btn-success">Restart</button>
+            <button ng-click="restartGame()" type="button" class="btn btn-info">restart</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Main Page -->
+  <div class="counterContainer">
+    <div class="note">Press a number key to generate a new word (5 second penalty)</div>
+    <div class="timer">Time Remaining: {{timer}} Second(s)</div>
+  </div>
 
+  <div class="titleContainer">
+    <div class="title">Word Scramble</div>
+    <div class="points">Current Points: {{points}}</div>
+  </div>
 
-    
-  <div class="title">Word Scramble</div>
+  <div id="characterContainer">
+    <span class="completedCharacters card-panel" ng-repeat="item in finishedWordArray">
+      {{item.letter}}
+    </span>
 
-  <span class="completedCharacters" ng-repeat="item in finishedWordArray">
-    {{item.letter}}
-  </span>
+    <span class="characters card-panel" ng-repeat="item in currentWordArray">
+      {{item.letter}}
+    </span>
+  </div>
+  
+  <div class="extrasContainer">
+    <div class="creator">
+      Created by
+      <a target="_blank" href="https://github.com/josephlin55555">Joseph Lin</a>
 
-  <span class="characters" ng-repeat="item in currentWordArray">
-    {{item.letter}}
-  </span>
+      <br>
+      Want to fork this? Click
+      <a target="_blank" href="https://github.com/josephlin55555/opendoorapp">here</a>.
+    </div>
+    <div class="cheats">For cheats, open the console.</div>
+  </div>
 
-  <div class="timer">Timer: {{timer}}</div>
-  <div class="points">Current Points: {{points}}</div>
-  <div class="note">Press "1" to grab a new word</div>
-  <div class="creator">Designed by Joseph Lin</div>
-
+  <!-- Scripts -->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <script src="/node_modules/angular/angular.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="client.js"></script>
+  <script src="/node_modules/materialize-css/bin/materialize.js"></script>
 </body>
 
 </html>
