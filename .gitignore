@@ -15,16 +15,14 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 
-# Grunt intermediate storage (http://gruntjs.com/creating-plugins#storing-task-files)
+# Grunt intermediate storage
 .grunt
 
-# Compiled Dirs (http://nodejs.org/api/addons.html)
+# Compiled Dirs
 build/
 dist/
 
-# Dependency directorys
-# Deployed apps should consider commenting these lines out:
-# see https://npmjs.org/doc/faq.html#Should-I-check-my-node_modules-folder-into-git
+# Dependency directories
 node_modules/
 bower_components/
 
