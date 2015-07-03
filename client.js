@@ -2,8 +2,8 @@ angular.module('angularApp', [])
   .controller('angularController', function($scope, $http, $timeout) {
     
     //game logic is mainly handled between the following two arrays:
-    $scope.currentWordArray = []; 
-    $scope.finishedWordArray = []; 
+    $scope.finishedWordArray = [{letter: "There is no emotion..."}]; 
+    $scope.currentWordArray = [{letter: "there is peace."}]; 
 
     //used for checking purposes
     $scope.correctWordArray = []; 
@@ -62,6 +62,24 @@ angular.module('angularApp', [])
     //initializes the timer
     $timeout($scope.timeObject, 1000);
 
+    /* 
+      future function for condition once you hit 1,000,000 points
+      should allow you to enter in initials and rank to database
+    */
+    $scope.winGame = function() {
+      $('.text-warning').text('You\'ve beaten the game!');
+         
+      //can't escape modal via clicking outside or hitting escape
+      $('#myModal').modal({
+        backdrop: 'static',
+        keyboard: false
+      });
+
+      //show modal
+      $("#myModal").modal('show');
+      
+    };
+
     //once $scope.finishedWordArray is completely filled, then check if word is correct
     $scope.checkForCompletion = function() {
       var sameLetters = true;
@@ -78,7 +96,18 @@ angular.module('angularApp', [])
 
           //the faster the player completes the word, the more points he/she gets
           if($scope.timer >= 90) {
-            $scope.points += 3 * $scope.finishedWordArray.length;
+            if($scope.points < 100) {
+              $scope.points += 3 * $scope.finishedWordArray.length;
+            } else if($scope.points >= 100 && $scope.points < 999) {
+              $scope.points += 10 * $scope.finishedWordArray.length;
+            } else if($scope.points >= 1000 && $scope.points < 9999) {
+              $scope.points += 100 * $scope.finishedWordArray.length;
+            } else if($scope.points >= 10000 && $scope.points < 99999) {
+              $scope.points += 1000 * $scope.finishedWordArray.length;
+            } else if($scope.points > 99999) {
+              $scope.winGame();
+            }
+
           } else if ($scope.timer <= 89 && $scope.timer >= 60) {
             $scope.points += 2 * $scope.finishedWordArray.length;
           } else {
@@ -148,7 +177,8 @@ angular.module('angularApp', [])
 
     //grabs a random word
     $scope.getWord = function() {
-      $http.get('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&excludePartOfSpeech=pronoun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=5&maxLength=-1&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').
+      //can't use https, as you get an error
+      $http.get('http://api.wordnik.com:80/v4/words.json/randomWord?hasDictionaryDef=true&includePartOfSpeech=adjective&excludePartOfSpeech=pronoun&minCorpusCount=0&maxCorpusCount=-1&minDictionaryCount=1&maxDictionaryCount=-1&minLength=1&maxLength=11&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').
       success(function(data, status, headers, config) {
         
         //reset current word
@@ -185,6 +215,9 @@ angular.module('angularApp', [])
       //restart game and remove modal
       $timeout($scope.timeObject, 1000);
       $("#myModal").modal('hide');
+
+      //reset text to losing condition
+      $('.text-warning').text('Think you can do better?');
     };
 
   });
