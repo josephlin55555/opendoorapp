@@ -2,8 +2,8 @@ angular.module('angularApp', [])
   .controller('angularController', function($scope, $http, $timeout) {
     
     //game logic is mainly handled between the following two arrays:
-    $scope.finishedWordArray = [{letter: "There is no emotion..."}]; 
-    $scope.currentWordArray = [{letter: "there is peace."}]; 
+    $scope.finishedWordArray = []; 
+    $scope.currentWordArray = []; 
 
     //used for checking purposes
     $scope.correctWordArray = []; 
@@ -13,11 +13,32 @@ angular.module('angularApp', [])
     
     //points accumulated in a single round
     $scope.points = 0;
-
+    
     //returns an integer between @min and @max
     $scope.randomGenerator = function(min, max) {
       return Math.floor(Math.random() * (max - min + 1) + min);
     };
+
+    //loading quotes for personal amusement
+    $scope.loading = function() {
+      var quotes = [
+      "There is no emotion...", "There is peace.",
+      "These blast points-", "too accurate for sand people.",
+      "You will never find a more wretched hive of scum and villainy...", "We must be cautious.",
+      "We seem to be made to suffer...", "It's our lot in life.",
+      "Help me, Obi-Wan Kenobi...", "you're my only hope.",
+      "I sense something-", "a presence I've not felt since...",
+      ];
+
+      var value = $scope.randomGenerator(0, Math.floor((quotes.length - 1) / 2));
+      value *= 2;
+
+      $scope.finishedWordArray.push({letter: quotes[value]});
+      $scope.currentWordArray.push({letter: quotes[value + 1]});
+    };
+    //initialize loading quotes
+    $scope.loading();
+
 
     //timer will count down to 0, starting at 120 seconds
     $scope.timeObject = function() {
