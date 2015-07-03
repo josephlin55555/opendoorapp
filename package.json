@@ -1,0 +1,26 @@
+{
+  "name": "opendoorapp",
+  "version": "1.0.0",
+  "description": "word scramble game",
+  "main": "server.js",
+  "dependencies": {
+    "angular": "^1.4.1",
+    "body-parser": "^1.13.1",
+    "ejs": "^2.3.2",
+    "express": "^4.13.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephlin55555/opendoorapp.git"
+  },
+  "author": "Joseph Lin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josephlin55555/opendoorapp/issues"
+  },
+  "homepage": "https://github.com/josephlin55555/opendoorapp#readme"
+}
