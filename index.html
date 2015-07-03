@@ -18,7 +18,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            
             <h4 class="modal-title">Play Again?</h4>
           </div>
           <div class="modal-body">
@@ -38,7 +38,11 @@
     
   <div class="title">Word Scramble</div>
 
-  <span class="characters" ng-repeat="item in currentWordArray | orderBy:'-priority'">
+  <span class="completedCharacters" ng-repeat="item in finishedWordArray">
+    {{item.letter}}
+  </span>
+
+  <span class="characters" ng-repeat="item in currentWordArray">
     {{item.letter}}
   </span>
 
