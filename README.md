@@ -1,5 +1,5 @@
-# Word Scramble 
-A randomized word scramble typing game
+# Word Scramble  
+A randomized word scramble typing game  
 Created by Joseph Lin  
 Deployed to http://word-scamble.herokuapp.com/  
 
