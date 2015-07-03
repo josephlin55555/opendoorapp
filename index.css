@@ -1,9 +1,11 @@
 /*----------------Main Page-----------------*/
 
+/* size for both .note and .timer */
 .counterContainer {
   font-size: 17px;
 }
 
+/* Middle-upper note for word generation */
 .note {
   width: 100%;
   text-align: center;
@@ -14,6 +16,7 @@
   transform: translate(-50%, -50%);
 }
 
+/* Top-right timer */
 .timer {
   width: 100%;
   text-align: center;
@@ -26,6 +29,7 @@
   color: #7FDBFF; 
 }
 
+/* Containers .title and .points */
 .titleContainer {
   width: 100%;
   text-align: center;
@@ -36,14 +40,17 @@
   transform: translate(-50%, -50%);
 }
 
+/* "Word Scramble" title */
 .title {
   font-size: 40px;
 }
 
+/* point counter below title */
 .points {
   font-size: 20px;
 }
 
+/* Instructions listed above ng-repeats */
 .instructions {
   font-size: 20px;
   width: 100%;
@@ -55,6 +62,7 @@
   transform: translate(-50%, -50%);
 }
 
+/* contains both ng-repeats (@finished and @current word arrays) */
 #characterContainer {
   font-size: 20px;
   width: 100%;
@@ -66,14 +74,17 @@
   transform: translate(-50%, -50%);
 }
 
+/* for @finished word array */
 .completedCharacters.card-panel {
   background-color: orange;
 }
 
+/* for @current word array */
 .characters.card-panel {
 
 }
 
+/* contains bottom-most text, such as links to my github profile and repo */
 .extrasContainer {
   font-size: 17px;
   width: 100%;
@@ -91,24 +102,28 @@
 
 /*----------------Modal---------------------*/
 
-
+/* removes buggy css */
 #myModal{
   background-color: transparent;
   box-shadow: none;
 }
 
+/* centers modal title */
 .modal-title {
   text-align: center;
 }
 
+/* centers modal body */
 .modal-body {
   text-align: center;
 }
 
+/* centers button inside of .modal-footer */
 .modal-footer {
   text-align: center !important;
 }
 
+/* removes the forced float */
 .btn.btn-info {
   float: none !important;
 }

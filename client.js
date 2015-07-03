@@ -230,6 +230,7 @@ angular.module('angularApp', [])
     };
 
     $scope.restartGame = function() {
+      //reset pointd and timer
       $scope.timer = 120;
       $scope.points = 0;
 
