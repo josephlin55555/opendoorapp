@@ -77,11 +77,7 @@
 /* for @finished word array */
 .completedCharacters.card-panel {
   background-color: orange;
-}
-
-/* for @current word array */
-.characters.card-panel {
-
+  color: white;
 }
 
 /* contains bottom-most text, such as links to my github profile and repo */
