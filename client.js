@@ -83,10 +83,7 @@ angular.module('angularApp', [])
     //initializes the timer
     $timeout($scope.timeObject, 1000);
 
-    /* 
-      future function for condition once you hit 1,000,000 points
-      should allow you to enter in initials and rank to database
-    */
+    //Once you hit beyond a certain threshold, you win the game
     $scope.winGame = function() {
       $('.text-warning').text('You\'ve beaten the game!');
          
