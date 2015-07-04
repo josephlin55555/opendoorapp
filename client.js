@@ -207,7 +207,7 @@ angular.module('angularApp', [])
         $scope.currentWordArray = [];
         $scope.correctWordArray = [];
 
-        //pushes each character to @correct and @finished arrays
+        //pushes each character to @correct and @current arrays
         for(var i = 0; i < data.word.length; i++) {
           $scope.correctWordArray.push({letter: data.word[i], index: i});
           $scope.currentWordArray.push({letter: data.word[i], index: i});
