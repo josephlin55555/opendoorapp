@@ -188,22 +188,9 @@ angular.module('angularApp', [])
       var character = String.fromCharCode(event.charCode);
 
       //if key is a number, then grab a new word and give a 5 second penalty
-      //if key is spacebar, clear all selected letters and reset to original letter order (3 second penalty)
-      if($scope.isNumeric(character) && $scope.timer > 10 || character === ' ') {
-        if(character === ' ') {
-          //clears @finished
-          $scope.finishedWordArray = [];
-
-          //reset to original letter order
-          for(var i = 0; i < $scope.scrambledCorrectWordArray.length; i++) {
-            $scope.currentWordArray[i] = $scope.scrambledCorrectWordArray[i];
-          }
-
-        } else {
-          $scope.getWord();
-          $scope.timer -= 5;
-        }
-
+      if($scope.isNumeric(character) && $scope.timer > 10) {
+        $scope.getWord();
+        $scope.timer -= 5;
       }
       
       //disable character once it has been pressed
@@ -253,7 +240,7 @@ angular.module('angularApp', [])
 
         //for resetting purposes
         for(var i = 0; i < $scope.currentWordArray.length; i++) {
-          $scope.scrambledCorrectWordArray.push($scope.currentWordArray[i]);
+          $scope.scrambledCorrectWordArray[i] = $scope.currentWordArray[i];
         }
 
         //in case user can't figure out the word
