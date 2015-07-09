@@ -7,6 +7,9 @@ angular.module('angularApp', [])
 
     //used for checking purposes
     $scope.correctWordArray = []; 
+
+    //scrambled array for checking purposes
+    $scope.scrambledCorrectWordArray = [];
     
     //time remaining in terms of seconds
     $scope.timer = 120;
@@ -101,55 +104,72 @@ angular.module('angularApp', [])
     //once $scope.finishedWordArray is completely filled, then check if word is correct
     $scope.checkForCompletion = function() {
       var sameLetters = true;
+      var letters = '';
 
       if($scope.currentWordArray.length === 0) {
         for(var i = 0; i < $scope.finishedWordArray.length; i++) {
+          letters += $scope.finishedWordArray[i].letter;
           if($scope.finishedWordArray[i].letter !== $scope.correctWordArray[i].letter) {
             sameLetters = false;
           }
         }
 
-        //player wins round
-        if(sameLetters === true) {
+        //allows for anagrams to count towards point system
+        $http.get('http://api.wordnik.com/v4/word.json/' + letters + '/definitions?api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5').
+          success(function(data) {
 
-          //the faster the player completes the word, the more points he/she gets
-          if($scope.timer >= 90) {
-            if($scope.points < 100) {
-              $scope.points += 3 * $scope.finishedWordArray.length;
-            } else if($scope.points >= 100 && $scope.points < 999) {
-              $scope.points += 10 * $scope.finishedWordArray.length;
-            } else if($scope.points >= 1000 && $scope.points < 9999) {
-              $scope.points += 100 * $scope.finishedWordArray.length;
-            } else if($scope.points >= 10000 && $scope.points < 99999) {
-              $scope.points += 1000 * $scope.finishedWordArray.length;
-            } else if($scope.points > 99999) {
-              $scope.winGame();
+            if(data.length === 0) { //anagram does not exist
+              sameLetters = false;
+            } else {
+              sameLetters = true; //anagram exists
             }
 
-          } else if ($scope.timer <= 89 && $scope.timer >= 60) {
-            $scope.points += 2 * $scope.finishedWordArray.length;
-          } else {
-            $scope.points += $scope.finishedWordArray.length;
-          }
+            //player wins round
+            if(sameLetters === true) {
 
-          //now reset time and grab a new word
-          $scope.timer = 120;
-          $scope.getWord();
+              //the faster the player completes the word, the more points he/she gets
+              if($scope.timer >= 90) {
+                if($scope.points < 100) {
+                  $scope.points += 3 * $scope.finishedWordArray.length;
+                } else if($scope.points >= 100 && $scope.points < 999) {
+                  $scope.points += 10 * $scope.finishedWordArray.length;
+                } else if($scope.points >= 1000 && $scope.points < 9999) {
+                  $scope.points += 100 * $scope.finishedWordArray.length;
+                } else if($scope.points >= 10000 && $scope.points < 99999) {
+                  $scope.points += 1000 * $scope.finishedWordArray.length;
+                } else if($scope.points > 99999) {
+                  $scope.winGame();
+                }
 
-        } else { //or player loses round
+              } else if ($scope.timer <= 89 && $scope.timer >= 60) {
+                $scope.points += 2 * $scope.finishedWordArray.length;
+              } else {
+                $scope.points += $scope.finishedWordArray.length;
+              }
 
-          $scope.points -= 1;
+              //now reset time and grab a new word
+              $scope.timer = 120;
+              $scope.getWord();
 
-          //place back letters into current Array
-          $scope.currentWordArray = [];
+            } else { //or player loses round
 
-          for(var i = 0; i < $scope.finishedWordArray.length; i++) {
-            $scope.currentWordArray.push($scope.finishedWordArray[i]);
-          }
+              $scope.points -= 1;
 
-          //empty out already typed out letters
-          $scope.finishedWordArray = [];
-        }
+              //place back letters into current Array
+              $scope.currentWordArray = [];
+
+              for(var i = 0; i < $scope.finishedWordArray.length; i++) {
+                $scope.currentWordArray.push($scope.finishedWordArray[i]);
+              }
+
+              //empty out already typed out letters
+              $scope.finishedWordArray = [];
+            }
+
+          }).
+          error(function(data) {
+            console.log("Anagram failed to load");
+          });
       }
     };
 
@@ -168,9 +188,22 @@ angular.module('angularApp', [])
       var character = String.fromCharCode(event.charCode);
 
       //if key is a number, then grab a new word and give a 5 second penalty
-      if($scope.isNumeric(character) && $scope.timer > 10) {
-        $scope.getWord();
-        $scope.timer -= 5;
+      //if key is spacebar, clear all selected letters and reset to original letter order (3 second penalty)
+      if($scope.isNumeric(character) && $scope.timer > 10 || character === ' ') {
+        if(character === ' ') {
+          //clears @finished
+          $scope.finishedWordArray = [];
+
+          //reset to original letter order
+          for(var i = 0; i < $scope.scrambledCorrectWordArray.length; i++) {
+            $scope.currentWordArray[i] = $scope.scrambledCorrectWordArray[i];
+          }
+
+        } else {
+          $scope.getWord();
+          $scope.timer -= 5;
+        }
+
       }
       
       //disable character once it has been pressed
@@ -216,6 +249,11 @@ angular.module('angularApp', [])
           var temp = $scope.currentWordArray[i];
           $scope.currentWordArray[i] = $scope.currentWordArray[randomIndex];
           $scope.currentWordArray[randomIndex] = temp;
+        }
+
+        //for resetting purposes
+        for(var i = 0; i < $scope.currentWordArray.length; i++) {
+          $scope.scrambledCorrectWordArray.push($scope.currentWordArray[i]);
         }
 
         //in case user can't figure out the word
