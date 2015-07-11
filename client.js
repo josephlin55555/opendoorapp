@@ -5,9 +5,6 @@ angular.module('angularApp', [])
     $scope.finishedWordArray = []; 
     $scope.currentWordArray = []; 
 
-    //used for checking purposes
-    $scope.correctWordArray = []; 
-
     //scrambled array for checking purposes
     $scope.scrambledCorrectWordArray = [];
     
@@ -109,9 +106,6 @@ angular.module('angularApp', [])
       if($scope.currentWordArray.length === 0) {
         for(var i = 0; i < $scope.finishedWordArray.length; i++) {
           letters += $scope.finishedWordArray[i].letter;
-          if($scope.finishedWordArray[i].letter !== $scope.correctWordArray[i].letter) {
-            sameLetters = false;
-          }
         }
 
         //allows for anagrams to count towards point system
@@ -222,11 +216,9 @@ angular.module('angularApp', [])
         //reset current word
         $scope.finishedWordArray = [];
         $scope.currentWordArray = [];
-        $scope.correctWordArray = [];
 
         //pushes each character to @correct and @current arrays
         for(var i = 0; i < data.word.length; i++) {
-          $scope.correctWordArray.push({letter: data.word[i], index: i});
           $scope.currentWordArray.push({letter: data.word[i], index: i});
         }
 
