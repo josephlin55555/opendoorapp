@@ -3,7 +3,7 @@ angular.module('angularApp', [])
 
     $http.get('/api/winners').
       success(function(data) {
-        console.log(data + ' people have won so far');
+        console.log(data + ' winner(s) so far!');
       }).
       error(function() {
         console.log('Database retrieval failed');
@@ -20,7 +20,7 @@ angular.module('angularApp', [])
     $scope.timer = 120;
     
     //points accumulated in a single round
-    $scope.points = 0;
+    $scope.points = 100000;
     
     //returns an integer between @min and @max
     $scope.randomGenerator = function(min, max) {
