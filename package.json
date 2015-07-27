@@ -5,10 +5,11 @@
   "main": "server.js",
   "dependencies": {
     "angular": "^1.4.1",
-    "body-parser": "^1.13.1",
+    "body-parser": "^1.13.2",
     "ejs": "^2.3.2",
     "express": "^4.13.0",
     "materialize-css": "^0.96.1",
+    "mongoose": "^4.1.0",
     "normalize.css": "^3.0.3"
   },
   "devDependencies": {},

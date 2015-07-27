@@ -1,5 +1,13 @@
 angular.module('angularApp', [])
   .controller('angularController', function($scope, $http, $timeout) {
+
+    $http.get('/api/winners').
+      success(function(data) {
+        console.log(data + ' people have won so far');
+      }).
+      error(function() {
+        console.log('Database retrieval failed');
+      });
     
     //game logic is mainly handled between the following two arrays:
     $scope.finishedWordArray = []; 
@@ -12,7 +20,7 @@ angular.module('angularApp', [])
     $scope.timer = 120;
     
     //points accumulated in a single round
-    $scope.points = 0;
+    $scope.points = 100000;
     
     //returns an integer between @min and @max
     $scope.randomGenerator = function(min, max) {
@@ -96,6 +104,13 @@ angular.module('angularApp', [])
       //show modal
       $("#myModal").modal('show');
       
+      $http.post('/api/winners', {winner: 1}).
+        success(function(data) {
+          console.log('Successfully sent to winner API endpoint');
+        }).
+        error(function() {
+          console.log('Error in sending item to winner API endpoint');
+        });
     };
 
     //once $scope.finishedWordArray is completely filled, then check if word is correct
