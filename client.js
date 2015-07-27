@@ -20,7 +20,7 @@ angular.module('angularApp', [])
     $scope.timer = 120;
     
     //points accumulated in a single round
-    $scope.points = 100000;
+    $scope.points = 0;
     
     //returns an integer between @min and @max
     $scope.randomGenerator = function(min, max) {
